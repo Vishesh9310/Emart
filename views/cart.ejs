@@ -1,0 +1,69 @@
+<%- include('./partials/header') %>
+    <div class="w-full h-screen flex items-start px-20 mb-5 gap-10">
+        <div class="w-[60%] rounded-md overflow-hidden grid grid-cols-2 gap-5">
+            <% var products=user.cart %>
+            <% var totalmrp=0 %>
+            <% var totalprice=0 %>
+            <% products.forEach(function(product){ %>
+                <div class="w-full rounded-md overflow-hidden py-10">
+                    <div class="w-full flex justify-center items-center h-80 bg-[<%= product.bgcolor %>]">
+                        <img class="h-[18rem]"
+                            src="data:image/jpeg;base64,<%= product.image.toString('base64') %>" alt="">
+                    </div>
+                    <div
+                        class="w-full flex justify-between px-5 py-4 bg-[<%= product.panelcolor %>] text-[<%= product.textcolor %>]">
+                        <h3 class="text-2xl">
+                            <%= product.name %>
+                        </h3>
+                        <div class="flex gap-2 items-center h-full">
+                        <a class="w-5 h-5 flex items-center justify-center rounded-full bg-white" href="/removefromcart/<%= product._id %>">
+                            <i class="text-black ri-subtract-fill"></i>
+                        </a>
+                        <h4>
+                            Quantity: 1
+                        </h4>
+                        </div>
+                    </div>
+                    <div
+                        class="flex items-center justify-between px-5 py-3 text-[<%= product.textcolor %>] bg-[<%= product.panelcolor %>]">
+                        <h4 class="text-lg">₹ <%= product.price %></h4>
+                        <h4 class="text-lg">Discount: ₹ <%= product.discount %> </h4>
+                        <h4 class="text-lg">Net Total: <%= product.price - product.discount %></h4>
+                    </div>
+                </div>
+            <% totalmrp +=product.price %>
+            <% totalprice +=(Number(product.price))-Number(product.discount) %>
+            <% })%>
+        </div>
+        <div class="w-[40%]">
+            <h3 class="text-xl">Price Breakdown</h3>
+            <div class="px-10 mt-5">
+                <div class="flex mt-2">
+                    <h4 class="w-1/3">Total MRP</h4>
+                    <h4>₹ <%= totalmrp %>
+                    </h4>
+                </div>
+                <div class="flex mt-2">
+                    <h4 class="w-1/3">Discount on MRP</h4>
+                    <h4>₹ <%= totalmrp - totalprice %>
+                    </h4>
+                </div>
+                <div class="flex mt-2">
+                    <h4 class="w-1/3">Platform Fee</h4>
+                    <h4>₹ 20</h4>
+                </div>
+                <div class="flex mt-2">
+                    <h4 class="w-1/3">Shipping Fee</h4>
+                    <h4>FREE</h4>
+                </div>
+            </div>
+            <div class="w-full h-[1px] bg-black mt-10"></div>
+            <div class="flex mt-5">
+                <h3 class="w-1/3 text-xl">Total Amount</h3>
+                <h3 class="font-semibold text-xl text-green-600">₹ <%= totalprice +20 %>
+                </h3>
+            </div>
+            <form action=""></form>
+        </div>
+    </div>
+    <%- include('./partials/footer') %>
